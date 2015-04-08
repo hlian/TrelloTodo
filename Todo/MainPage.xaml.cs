@@ -54,9 +54,9 @@ namespace Trello {
                 // ... map to +1 if the item IsChecked, otherwise 0; then monitor IsChecked and map to +1/-1 accordingly ...
                 .Select(item => item.GetPropertyValues(x => x.IsChecked).CombinePreviousWithStart(0, (bool previous, bool current) => current.CompareTo(previous)))
                 // ... and finally tally up all +1's and -1's ...
-                .Merge().Scan(0, (sum, delta) => sum + delta)
+                .Merge().Scan(0, (nChecked, delta) => nChecked + delta)
                 // ... so we can print it out!
-                .Subscribe(delta => Debug.WriteLine("Number of checked items: {0}", delta));
+                .Subscribe(nChecked => Debug.WriteLine("Number of checked items: {0}", nChecked));
 
             Todos.Add(new TodoItem { Title = "Eggs" });
             Todos.Add(new TodoItem { Title = "Airplane tickets" });
